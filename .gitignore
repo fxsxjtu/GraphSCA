@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments and local configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+*~
+
+# Training data and generated artifacts
+data/
+datasets/
+outputs/
+output/
+results/
+results_shard/
+saves/
+checkpoints/
+wandb/
+ray_results/
+logs/
+*.log
+*.pid
+
+# Model and optimizer weights
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Dataset and trajectory formats
+*.parquet
+*.arrow
+*.jsonl
+
+# Archives and temporary files
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+tmp/
+temp/
+
+# Secrets and local overrides
+*.pem
+*.key
+credentials*
+secrets*
+local_config*
+

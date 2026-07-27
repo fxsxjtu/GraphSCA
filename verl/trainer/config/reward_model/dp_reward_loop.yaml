@@ -1,0 +1,56 @@
+defaults:
+  - dp_reward_model
+  - _self_
+
+use_reward_loop: True
+reward_manager: naive
+enable: False
+
+# Activation reward function configuration
+# Set reward_model and reward_label to enable activation-based step rewards
+reward_model: null  # Options: mlp, deep, tpv, or null to disable
+reward_label: null  # Options: mi, pos, or null to disable
+
+# Hazard-rate prediction model (from train_hazard_prediction.py)
+# Set hazard_model_path to a final_model.pth to use hazard reward
+# Supports mlp/rnn/transformer backbones (auto-detected from checkpoint)
+hazard_model_path: null  # e.g. /path/to/results/hazard_mlp/final_model.pth
+hazard_normalize_reward: true
+hazard_reward_scale: 1.0
+hazard_pair_mode: prev_concat  # For MLP backbone: prev_concat, self_concat, zero_prev
+
+# Whether to deploy the model to a separate resource pool.
+enable_resource_pool: False
+n_gpus_per_node: 8
+num_workers: 1
+nnodes: 0
+
+model:
+  path: ~/models/FsfairX-LLaMA3-RM-v0.1
+  external_lib: ${actor_rollout_ref.model.external_lib}
+  trust_remote_code: False
+
+rollout:
+  _target_: verl.workers.config.RolloutConfig
+  name: ???
+  dtype: bfloat16
+  gpu_memory_utilization: 0.5
+  enforce_eager: true
+  cudagraph_capture_sizes: null
+  free_cache_engine: true
+  data_parallel_size: 1
+  expert_parallel_size: 1
+  tensor_model_parallel_size: 2
+  max_num_batched_tokens: 8192
+  max_model_len: null
+  max_num_seqs: 1024
+  load_format: auto
+  engine_kwargs: {}
+  limit_images: null
+  enable_chunked_prefill: true
+  enable_prefix_caching: true
+  disable_log_stats: true
+  skip_tokenizer_init: false
+
+  prompt_length: 2048
+  response_length: 2048
